@@ -27,10 +27,8 @@ jobs:
         run: |
           npm install
           npm run test
-          echo "$commitmsg"
           echo "$GITHUB_CONTEXT"
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-          commitmsg: ${{ github.event.head_commit.message }}
+          GITHUB_CONTEXT: ${{ toJson(github.event.head_commit) }}
 
 
