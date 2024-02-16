@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_app:
-    if: "!startsWith(${{github.event.head_commit.message}}, '[skip runT6]')"
+    if: startsWith(${{github.event.head_commit.message}}, '[skip runT6]') != true
     name: Build APP
     runs-on: ubuntu-latest
 
