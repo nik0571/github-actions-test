@@ -29,7 +29,7 @@ jobs:
           npm run test
           echo "$GITHUB_CONTEXT"
           echo ${{ toJSON(github.event.commits) }}
-          echo "${{toJSON(github.event)}}"
+          # echo "${{toJSON(github.event)}}"
         env:
           GITHUB_CONTEXT: ${{ toJSON(github.event.head_commit.message) }}
 
