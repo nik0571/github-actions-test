@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_app:
-    if: ${{ !startsWith(github.event.head_commit.message, '#skipTestings') }}
+    if: ${{ !contains(github.event.head_commit.message, 'skipTestings') }}
     name: Build APP
     runs-on: ubuntu-latest
 
@@ -27,8 +27,8 @@ jobs:
         run: |
           npm install
           npm run test
-          echo "$GITHUB_CONTEXT"
-          echo ${{ toJSON(steps.get_head_commit_title.outputs.title) }}
+          # echo "$GITHUB_CONTEXT"
+          # echo ${{ toJSON(steps.get_head_commit_title.outputs.title) }}
           # echo "${{toJSON(github.event)}}"
         env:
           GITHUB_CONTEXT: ${{ toJSON(github.event.head_commit.message) }}
