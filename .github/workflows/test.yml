@@ -29,6 +29,6 @@ jobs:
           npm run test
           echo "$GITHUB_CONTEXT"
         env:
-          GITHUB_CONTEXT: ${{ github.event.head_commit.message }}
+          GITHUB_CONTEXT: ${{ toJson(github.event.workflow_run.head_commit.message) }}
 
 
