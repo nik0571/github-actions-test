@@ -27,10 +27,5 @@ jobs:
         run: |
           npm install
           npm run test
-          # echo "$GITHUB_CONTEXT"
-          # echo ${{ toJSON(steps.get_head_commit_title.outputs.title) }}
-          # echo "${{toJSON(github.event)}}"
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github.event.head_commit.message) }}
 
 
