@@ -28,8 +28,8 @@ jobs:
           npm install
           npm run test
           echo "$GITHUB_CONTEXT"
-          echo "${{toJSON(github.event.head_commit)}}"
+          echo "${{toJSON(github.event)}}"
         env:
-          GITHUB_CONTEXT: ${{ toJson(github.event.workflow_run.head_commit.message) }}
+          GITHUB_CONTEXT: ${{ toJSON(github.event.head_commit.message) }}
 
 
