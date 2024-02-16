@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x]
-        message: github.event.head_commit.message
+        message: ${{github.event.head_commit.message}}
 
     steps:
       - name: Checkout
