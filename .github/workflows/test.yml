@@ -26,6 +26,8 @@ jobs:
         run: |
           npm install
           npm run test
-          echo github.event.head_commit.message conta ${{contains(github.event.head_commit.message, 'skipTesting')}}
+          echo ${{ toJSON(github.event.head_commit.title) }}
+          echo ${{ toJSON(github.event.head_commit.message) }}
+          echo github.event.head_commit.message conta github.event.head_commit.message ${{contains(github.event.head_commit.message, 'skipTesting')}}
 
 
