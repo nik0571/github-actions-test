@@ -10,17 +10,12 @@ jobs:
     if: ${{ !startsWith(github.event.head_commit.message, '#skipTestings') }}
     name: Build APP
     runs-on: ubuntu-latest
-    env:
-      commitmsg: ${{ github.event.head_commit.message }}
 
     strategy:
       matrix:
         node-version: [20.x]
 
     steps:
-      - name: set the head commit message as env
-        run: |
-          echo '::set-env name=commitmsg::${{ github.event.head_commit.message }}'
       - name: Checkout
         uses: actions/checkout@v4.1.1
       - name: Use Node.js ${{ matrix.node-version }}
@@ -32,8 +27,10 @@ jobs:
         run: |
           npm install
           npm run test
-      - name: get commit message
-        run: |
-          echo Commit MSG = $commitmsg
+          echo Commit MSG = ${{ env.commitmsg }}
+          echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+          commitmsg: ${{ github.event.head_commit.message }}
 
 
