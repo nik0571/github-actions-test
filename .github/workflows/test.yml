@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_app:
-    if: ${{ !contains(github.event.head_commit.message, 'skipTestings') }}
+    if: contains(github.event.head_commit.message, 'skipTestings')
     name: Build APP
     runs-on: ubuntu-latest
 
