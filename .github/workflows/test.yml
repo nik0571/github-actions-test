@@ -29,6 +29,6 @@ jobs:
           npm run test
           echo "$GITHUB_CONTEXT"
         env:
-          GITHUB_CONTEXT: ${{ toJson(github.event.head_commit) }}
+          GITHUB_CONTEXT: ${{ toJson(github.event.head_commit.message) }}
 
 
