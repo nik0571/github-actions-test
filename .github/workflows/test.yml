@@ -43,4 +43,4 @@ jobs:
         run: |
           npm install
           npm run test
-          echo ${{ needs.check_skip_flags.outputs.head-commit-message }}
+
