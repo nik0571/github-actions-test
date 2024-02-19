@@ -17,17 +17,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
+      - name: Commit Conditions
+        uses: steviemul/commit-conditions@v1.0.2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4.0.2
         with:
+          fail-commit-message: '[skip testings]'
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - name: npm install, test
         run: |
           npm install
           npm run test
-          echo ${{ github.event.commits[0].message }}
-          echo ${{ toJSON(github.event.head_commit.title) }}
-          echo ${{ toJSON(github.event.head_commit.message) }}
-          echo github.event.head_commit.message conta github.event.head_commit.message ${{contains(github.event.head_commit.message, 'skipTesting')}}
 
