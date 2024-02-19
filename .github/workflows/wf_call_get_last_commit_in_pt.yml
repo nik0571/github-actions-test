@@ -22,3 +22,4 @@ jobs:
         id: get_head_commit_message
         run: echo "lastcommit=$(git show -s --format=%s)" >> "$GITHUB_OUTPUT"
 
+
