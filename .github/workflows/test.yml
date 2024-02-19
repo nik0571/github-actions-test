@@ -26,4 +26,4 @@ jobs:
         run: |
           npm install
           npm run test
-          echo ${{ toJSON(github) }}
+          echo ${{ github }}
