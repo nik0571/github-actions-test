@@ -24,6 +24,7 @@ jobs:
   build_app:
     name: Build APP
     runs-on: ubuntu-latest
+    needs: check_skip_flags
 
     strategy:
       matrix:
@@ -41,4 +42,4 @@ jobs:
         run: |
           npm install
           npm run test
-          echo ${{ github.event.pull_request. }}
+          echo ${{ needs.check_skip_flags.outputs.head-commit-message }}
