@@ -25,6 +25,7 @@ jobs:
     name: Build APP
     runs-on: ubuntu-latest
     needs: check_skip_flags
+    if: ${{ !contains(needs.check_skip_flags.outputs.head-commit-message, '#skip testing') }}
 
     strategy:
       matrix:
