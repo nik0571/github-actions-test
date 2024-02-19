@@ -9,7 +9,7 @@ on:
 jobs:
 
   call_get_last_commit_in_pr:
-    uses: ./.github/workflows/calls/get_last_commit_in_pt.yml.yml
+    uses: ./.github/workflows/wf_call_get_last_commit_in_pt.yml.yml
 
   build_app:
     name: Build APP
