@@ -1,10 +1,8 @@
-name: Check Skip Flags in Commit
+name: Get Last Commit text
 on:
   workflow_call:
     outputs:
-      lastcommit:
-        description: "last commit text"
-        value: ${{ jobs.check_skip_flags.outputs.head-commit-message }}
+      lastcommit: ${{ jobs.check_skip_flags.outputs.head-commit-message }}
 
 jobs:
   check_skip_flags:
