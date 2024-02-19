@@ -2,10 +2,11 @@ name: Testings
 on:
   push:
     branches: ["main"]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build_app:
-    if: ${{ contains(github.event.head_commit.message, 'skip test') }}
     name: Build APP
     runs-on: ubuntu-latest
 
@@ -25,3 +26,8 @@ jobs:
         run: |
           npm install
           npm run test
+          echo ${{ github.event.commits[0].message }}
+          echo ${{ toJSON(github.event.head_commit.title) }}
+          echo ${{ toJSON(github.event.head_commit.message) }}
+          echo github.event.head_commit.message conta github.event.head_commit.message ${{contains(github.event.head_commit.message, 'skipTesting')}}
+
