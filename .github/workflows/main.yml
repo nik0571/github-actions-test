@@ -15,7 +15,7 @@ jobs:
     name: Build APP
     runs-on: ubuntu-latest
     needs: callWorkflowCheckSkipFlags
-    if: ${{ !contains(needs.callWorkflowCheckSkipFlags.outputs.lastcommit.value, '[skip TestBuild]') }}
+    if: ${{ !contains(needs.callWorkflowCheckSkipFlags.outputs.lastcommit, '[skip TestBuild]') }}
 
     strategy:
       matrix:
