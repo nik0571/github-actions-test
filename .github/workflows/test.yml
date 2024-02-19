@@ -13,7 +13,7 @@ jobs:
     name: Build APP
     runs-on: ubuntu-latest
     needs: call_get_last_commit_in_pr
-    if: ${{ !contains(needs.call_get_last_commit_in_pr.outputslastcommit, '[skip Testing]') }}
+    if: ${{ !contains(needs.call_get_last_commit_in_pr.outputs.lastcommit, '[skip Testing]') }}
 
     strategy:
       matrix:
