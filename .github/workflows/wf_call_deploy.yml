@@ -3,7 +3,7 @@ name: deploy
 on:
   workflow_call:
     inputs:
-      SERVER_HOST_QA:
+      input_SERVER_HOST_QA:
         required: true
         type: string
 
@@ -13,4 +13,4 @@ jobs:
     steps:
       - name: echo result
         id: generate_rollback_folder_name
-        run: echo "resulkt ${{ inputs.SERVER_HOST_QA }}"
+        run: echo "resulkt ${{ inputs.input_SERVER_HOST_QA }}"
