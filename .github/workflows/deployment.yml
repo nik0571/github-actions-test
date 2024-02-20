@@ -52,3 +52,4 @@ jobs:
           SLACK_TITLE: Deploy to QA
           SLACK_MESSAGE: rollback folder => ${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}
           SLACK_ICON: https://img.icons8.com/external-yogi-aprelliyanto-flat-yogi-aprelliyanto/100/000000/external-startup-marketing-and-seo-yogi-aprelliyanto-flat-yogi-aprelliyanto.png
+
