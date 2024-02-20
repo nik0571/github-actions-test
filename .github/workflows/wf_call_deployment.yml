@@ -19,10 +19,10 @@ on:
         type: string
         required: true
 
-    outputs:
-      toRollback:
-        description: "folder To Rollback"
-        value: ${{ jobs.deploy_to_qa.outputs.folder-name }}
+    # outputs:
+    #   toRollback:
+    #     description: "folder To Rollback"
+    #     value: ${{ jobs.deploy_to_qa.outputs.folder-name }}
 
 jobs:
 
