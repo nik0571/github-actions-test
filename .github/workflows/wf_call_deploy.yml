@@ -13,4 +13,4 @@ jobs:
     steps:
       - name: echo result
         id: generate_rollback_folder_name
-        run: echo "resulkt"
+        run: echo "resulkt "${{ inputs.SERVER_HOST_QA }}"
