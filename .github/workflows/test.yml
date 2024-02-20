@@ -1,9 +1,9 @@
 name: Testings
 on:
   push:
-    branches: ["main"]
+    branches: ["qa"]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "qa" ]
 
 jobs:
   call_get_last_commit_in_pr:
