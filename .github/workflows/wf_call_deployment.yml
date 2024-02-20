@@ -2,6 +2,10 @@ name: Deployment WFCall
 
 on:
   workflow_call:
+    outputs:
+      toRollback:
+        description: "folder To Rollback"
+        value: ${{ jobs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}
     # inputs:
     #   SERVER_HOST_QA:
     #     type: string
