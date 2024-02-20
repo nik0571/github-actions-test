@@ -29,14 +29,14 @@ jobs:
 
     steps:
       - name: Rename dist to rollback ssh
-        run: echo "${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}"
-        # with:
-        #   host: ${{ secrets.SERVER_HOST_QA }}
-        #   username: ${{ secrets.SERVER_USER_QA }}
-        #   key: ${{ secrets.SERVER_SSH_KEY_QA }}
-        #   port: ${{ secrets.SERVER_SSH_PORT_QA }}
-        #   script: |
-        #     echo "$ROLLBACK_FOLDER"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST_QA }}
+          username: ${{ secrets.SERVER_USER_QA }}
+          key: ${{ secrets.SERVER_SSH_KEY_QA }}
+          port: ${{ secrets.SERVER_SSH_PORT_QA }}
+          script: |
+            mv -f /var/www/qa-web/test/name /var/www/qa-web/test/${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}
 
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
