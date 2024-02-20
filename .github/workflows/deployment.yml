@@ -1,0 +1,57 @@
+name: Deployment QA
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  call_get_last_commit_in_pr:
+    uses: ./.github/workflows/wf_call_get_last_commit_in_pt.yml
+
+
+  job_generate_rollback_folder_name:
+    name: Generate rollback folder name
+    runs-on: ubuntu-latest
+    needs: call_get_last_commit_in_pr
+    if: ${{ !contains(needs.call_get_last_commit_in_pr.outputs.lastcommit, '[skip DeploymentQA]') }}
+    outputs:
+      FOLDER_NAME: ${{ steps.generate_rollback_folder_name.outputs.rollbackName }}
+
+    steps:
+      - name: gemerate name folder
+        id: generate_rollback_folder_name
+        run: echo "rollbackName=rollback_$(date +%Y_%m_%d_%H_%M_%S)" >> "$GITHUB_OUTPUT"
+
+  deploy-to-qa:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: job_generate_rollback_folder_name
+    # if: ${{ !contains(needs.call_get_last_commit_in_pr.outputs.lastcommit, '[skip DeploymentQA]') }}
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Rename dist to rollback ssh
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST_QA }}
+          username: ${{ secrets.SERVER_USER_QA }}
+          key: ${{ secrets.SERVER_SSH_KEY_QA }}
+          port: ${{ secrets.SERVER_SSH_PORT_QA }}
+          script: |
+            mv -f /var/www/qa-web/test/name /var/www/qa-web/test/${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_QA }}
+          SLACK_USERNAME: rtCamp
+          SLACK_TITLE: Deploy to QA
+          SLACK_MESSAGE: rollback folder => ${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}
+          SLACK_ICON: https://img.icons8.com/external-yogi-aprelliyanto-flat-yogi-aprelliyanto/100/000000/external-startup-marketing-and-seo-yogi-aprelliyanto-flat-yogi-aprelliyanto.png
+
+
