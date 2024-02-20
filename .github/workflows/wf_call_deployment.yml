@@ -1,64 +1,92 @@
-name: Deployment
+name: Deplyoment
 on:
   workflow_call:
-    outputs:
-      toRollback:
-        description: "folderToRollback"
-        value: ${{ jobs.deploy-to-qa.outputs.folder-name }}
-    inputs:
-      SERVER_HOST_QA:
-        type: string
-        required: true
-      SERVER_USER_QA:
-        type: string
-        required: true
-      SERVER_SSH_KEY_QA:
-        type: string
-        required: true
-      SERVER_SSH_PORT_QA:
-        type: string
-        required: true
-      SERVER_SSH_PORT_QA:
-        type: string
-        required: true
-
 
 jobs:
 
-  job_generate_rollback_folder_name:
-    name: Generate rollback folder name
+  build_and_test:
+    name: Build and test
     runs-on: ubuntu-latest
-    needs: call_get_last_commit_in_pr
-    outputs:
-      FOLDER_NAME: ${{ steps.generate_rollback_folder_name.outputs.rollbackName }}
-
-    steps:
-      - name: gemerate name folder
-        id: generate_rollback_folder_name
-        run: echo "rollbackName=rollback_$(date +%Y_%m_%d_%H_%M_%S)" >> "$GITHUB_OUTPUT"
-
-
-  deploy-to-qa:
-    name: Deploy
-    runs-on: ubuntu-latest
-    needs: job_generate_rollback_folder_name
-    outputs:
-      folder-name: ${{ steps.return_result.outputs.lastcommit }}
 
     strategy:
       matrix:
         node-version: [20.x]
 
     steps:
-      - name: Rename dist to rollback ssh
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4.0.2
         with:
-          host: ${{ inputs.SERVER_HOST_QA }}
-          username: ${{ inputs.SERVER_USER_QA }}
-          key: ${{ inputs.SERVER_SSH_KEY_QA }}
-          port: ${{ inputs.SERVER_SSH_PORT_QA }}
-          script: |
-            mv -f /var/www/qa-web/test/name /var/www/qa-web/test/${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}
-      - name: return result
-        id: return_result
-        run: echo "toRollback=${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}" >> "$GITHUB_OUTPUT"
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: npm install, test
+        run: |
+          npm install
+          npm run test
+
+# name: Deployment
+
+# on:
+#   workflow_call:
+#     outputs:
+#       toRollback:
+#         description: "folderToRollback"
+#         value: ${{ jobs.deploy-to-qa.outputs.folder-name }}
+#     inputs:
+#       SERVER_HOST_QA:
+#         type: string
+#         required: true
+#       SERVER_USER_QA:
+#         type: string
+#         required: true
+#       SERVER_SSH_KEY_QA:
+#         type: string
+#         required: true
+#       SERVER_SSH_PORT_QA:
+#         type: string
+#         required: true
+#       SERVER_SSH_PORT_QA:
+#         type: string
+#         required: true
+
+
+# jobs:
+
+#   job_generate_rollback_folder_name:
+#     name: Generate rollback folder name
+#     runs-on: ubuntu-latest
+#     needs: call_get_last_commit_in_pr
+#     outputs:
+#       FOLDER_NAME: ${{ steps.generate_rollback_folder_name.outputs.rollbackName }}
+
+#     steps:
+#       - name: gemerate name folder
+#         id: generate_rollback_folder_name
+#         run: echo "rollbackName=rollback_$(date +%Y_%m_%d_%H_%M_%S)" >> "$GITHUB_OUTPUT"
+
+
+#   deploy-to-qa:
+#     name: Deploy
+#     runs-on: ubuntu-latest
+#     needs: job_generate_rollback_folder_name
+#     outputs:
+#       folder-name: ${{ steps.return_result.outputs.lastcommit }}
+
+#     strategy:
+#       matrix:
+#         node-version: [20.x]
+
+#     steps:
+#       - name: Rename dist to rollback ssh
+#         uses: appleboy/ssh-action@v1.0.3
+#         with:
+#           host: ${{ inputs.SERVER_HOST_QA }}
+#           username: ${{ inputs.SERVER_USER_QA }}
+#           key: ${{ inputs.SERVER_SSH_KEY_QA }}
+#           port: ${{ inputs.SERVER_SSH_PORT_QA }}
+#           script: |
+#             mv -f /var/www/qa-web/test/name /var/www/qa-web/test/${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}
+#       - name: return result
+#         id: return_result
+#         run: echo "toRollback=${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}" >> "$GITHUB_OUTPUT"
