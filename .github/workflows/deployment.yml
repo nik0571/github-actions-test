@@ -20,7 +20,6 @@ jobs:
 
     steps:
       - name: Rename dist to rollback ssh
-        uses: appleboy/ssh-action@v1.0.3
         run: echo "$ROLLBACK_FOLDER!"
         # with:
         #   host: ${{ secrets.SERVER_HOST_QA }}
@@ -39,14 +38,3 @@ jobs:
           SLACK_TITLE: Deploy to QA
           SLACK_MESSAGE: "rollback folder => $ROLLBACK_FOLDER"
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-
-      # - name: Copy file via SSH
-      #   uses: appleboy/scp-action@v0.1.7
-      #   with:
-      #     host: ${{ secrets.SERVER_HOST_QA }}
-      #     username: ${{ secrets.SERVER_USER_QA }}
-      #     port: ${{ secrets.SERVER_SSH_PORT_QA }}
-      #     key: ${{ secrets.SERVER_SSH_KEY_QA }}
-      #     rm: true
-      #     source: "./build/*.*"
-      #     target: "/var/www/ob-qa"
