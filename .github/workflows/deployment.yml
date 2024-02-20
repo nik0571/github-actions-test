@@ -9,9 +9,6 @@ env:
 
 jobs:
 
-  call_get_last_commit_in_pr:
-    uses: ./.github/workflows/wf_call_get_last_commit_in_pr.yml
-
   deploy-to-qa:
     name: Deploy
     runs-on: ubuntu-latest
