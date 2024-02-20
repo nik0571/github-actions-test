@@ -4,15 +4,24 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  ROLLBACK_FOLDER: "rollback_$(date +%Y_%m_%d_%H_%M_%S)"
-
 jobs:
+
+
+  job_generate_rollback_folder_name:
+    name: Generate rollback folder name
+    runs-on: ubuntu-latest
+    outputs:
+      ROLLBACK_FOLDER_NAME: ${{ steps.generate_rollback_folder_name.outputs }}
+
+    steps:
+      - name: gemerate name folder
+        id: generate_rollback_folder_name
+        run: echo "ROLLBACK_FOLDER_NAME=rollback_$(date +%Y_%m_%d_%H_%M_%S)" >> "$GITHUB_OUTPUT"
 
   deploy-to-qa:
     name: Deploy
     runs-on: ubuntu-latest
-    if: ${{ !contains(needs.call_get_last_commit_in_pr.outputs.lastcommit, '[skip DeploymentQA]') }}
+    needs: job_generate_rollback_folder_name
 
     strategy:
       matrix:
@@ -20,7 +29,7 @@ jobs:
 
     steps:
       - name: Rename dist to rollback ssh
-        run: echo "${{env.ROLLBACK_FOLDER}}"
+        run: echo "${{ needs.job_generate_rollback_folder_name.outputs.ROLLBACK_FOLDER_NAME }}"
         # with:
         #   host: ${{ secrets.SERVER_HOST_QA }}
         #   username: ${{ secrets.SERVER_USER_QA }}
@@ -31,10 +40,11 @@ jobs:
 
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
+        needs: job_generate_rollback_folder_name
         env:
           SLACK_COLOR: ${{ job.status }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_QA }}
           SLACK_USERNAME: rtCamp
           SLACK_TITLE: Deploy to QA
-          SLACK_MESSAGE: rollback folder => ${{env.ROLLBACK_FOLDER}}
+          SLACK_MESSAGE: rollback folder => ${{ needs.job_generate_rollback_folder_name.outputs.ROLLBACK_FOLDER_NAME }}
           SLACK_ICON: https://github.com/rtCamp.png?size=48
