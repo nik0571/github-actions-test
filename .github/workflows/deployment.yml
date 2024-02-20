@@ -27,7 +27,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY_QA }}
           port: ${{ secrets.SERVER_SSH_PORT_QA }}
           script: |
-            mv -f /var/www/qa-web/test/name /var/www/qa-web/test/${{ ROLLBACK_FOLDER }}
+            echo "${{ ROLLBACK_FOLDER }}"
 
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
