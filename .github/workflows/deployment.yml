@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Rename dist to rollback ssh
-        run: echo "$ROLLBACK_FOLDER"
+        run: echo "${{env.ROLLBACK_FOLDER}}"
         # with:
         #   host: ${{ secrets.SERVER_HOST_QA }}
         #   username: ${{ secrets.SERVER_USER_QA }}
