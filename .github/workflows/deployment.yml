@@ -6,10 +6,15 @@ on:
 
 jobs:
 
+  call_get_last_commit_in_pr:
+    uses: ./.github/workflows/wf_call_get_last_commit_in_pt.yml
+
 
   job_generate_rollback_folder_name:
     name: Generate rollback folder name
     runs-on: ubuntu-latest
+    needs: call_get_last_commit_in_pr
+    if: ${{ !contains(needs.call_get_last_commit_in_pr.outputs.lastcommit, '[skip DeploymentQA]') }}
     outputs:
       FOLDER_NAME: ${{ steps.generate_rollback_folder_name.outputs.rollbackName }}
 
@@ -18,21 +23,11 @@ jobs:
         id: generate_rollback_folder_name
         run: echo "rollbackName=rollback_$(date +%Y_%m_%d_%H_%M_%S)" >> "$GITHUB_OUTPUT"
 
-  job_generate_rollback_folder_name2:
-    name: Generate rollback folder name
-    runs-on: ubuntu-latest
-    outputs:
-      FOLDER_NAME: ${{ steps.generate_rollback_folder_name2.outputs.rollbackName2 }}
-
-    steps:
-      - name: gemerate name folder
-        id: generate_rollback_folder_name2
-        run: echo "rollbackName2=rollback_$(date +%Y_%m_%d_%H_%M_%S)" >> "$GITHUB_OUTPUT"
-
   deploy-to-qa:
     name: Deploy
     runs-on: ubuntu-latest
-    needs: [job_generate_rollback_folder_name, job_generate_rollback_folder_name2]
+    needs: [call_get_last_commit_in_pr, job_generate_rollback_folder_name]
+    if: ${{ !contains(needs.call_get_last_commit_in_pr.outputs.lastcommit, '[skip DeploymentQA]') }}
 
     strategy:
       matrix:
