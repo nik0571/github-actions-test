@@ -1,4 +1,4 @@
-name: Deployment QA
+name: Main flow completed
 
 on:
   pull_request:
