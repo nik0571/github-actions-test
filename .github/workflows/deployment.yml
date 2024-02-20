@@ -13,11 +13,16 @@ jobs:
     outputs:
       FOLDER_NAME: ${{ steps.generate_rollback_folder_name.outputs.rollbackName }}
 
+    steps:
+      - name: gemerate name folder
+        id: generate_rollback_folder_name
+        run: echo "rollbackName=rollback_$(date +%Y_%m_%d_%H_%M_%S)" >> "$GITHUB_OUTPUT"
+
   job_generate_rollback_folder_name2:
-    name: Generate rollback folder name 2
+    name: Generate rollback folder name
     runs-on: ubuntu-latest
     outputs:
-      FOLDER_NAME_2: ${{ steps.job_generate_rollback_folder_name2.outputs.rollbackName2 }}
+      FOLDER_NAME: ${{ steps.generate_rollback_folder_name2.outputs.rollbackName2 }}
 
     steps:
       - name: gemerate name folder
