@@ -36,5 +36,5 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_QA }}
           SLACK_USERNAME: rtCamp
           SLACK_TITLE: Deploy to QA
-          SLACK_MESSAGE: "rollback folder => $ROLLBACK_FOLDER"
+          SLACK_MESSAGE: "rollback folder => ${{env.ROLLBACK_FOLDER}}"
           SLACK_ICON: https://github.com/rtCamp.png?size=48
