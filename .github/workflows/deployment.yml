@@ -21,13 +21,14 @@ jobs:
     steps:
       - name: Rename dist to rollback ssh
         uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_HOST_QA }}
-          username: ${{ secrets.SERVER_USER_QA }}
-          key: ${{ secrets.SERVER_SSH_KEY_QA }}
-          port: ${{ secrets.SERVER_SSH_PORT_QA }}
-          script: |
-            echo "$ROLLBACK_FOLDER"
+        run: echo "$ROLLBACK_FOLDER!"
+        # with:
+        #   host: ${{ secrets.SERVER_HOST_QA }}
+        #   username: ${{ secrets.SERVER_USER_QA }}
+        #   key: ${{ secrets.SERVER_SSH_KEY_QA }}
+        #   port: ${{ secrets.SERVER_SSH_PORT_QA }}
+        #   script: |
+        #     echo "$ROLLBACK_FOLDER"
 
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
