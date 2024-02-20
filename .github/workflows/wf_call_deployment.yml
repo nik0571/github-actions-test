@@ -2,22 +2,22 @@ name: Deployment WFCall
 
 on:
   workflow_call:
-    inputs:
-      SERVER_HOST_QA:
-        type: string
-        required: true
-      SERVER_USER_QA:
-        type: string
-        required: true
-      SERVER_SSH_KEY_QA:
-        type: string
-        required: true
-      SERVER_SSH_PORT_QA:
-        type: string
-        required: true
-      SERVER_SSH_PORT_QA:
-        type: string
-        required: true
+    # inputs:
+    #   SERVER_HOST_QA:
+    #     type: string
+    #     required: true
+    #   SERVER_USER_QA:
+    #     type: string
+    #     required: true
+    #   SERVER_SSH_KEY_QA:
+    #     type: string
+    #     required: true
+    #   SERVER_SSH_PORT_QA:
+    #     type: string
+    #     required: true
+    #   SERVER_SSH_PORT_QA:
+    #     type: string
+    #     required: true
 
     # outputs:
     #   toRollback:
