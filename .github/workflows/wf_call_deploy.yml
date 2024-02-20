@@ -11,6 +11,6 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
-        run: echo "deplyment"
+      - name: echo result
+        id: generate_rollback_folder_name
+        run: echo "resulkt"
