@@ -1,0 +1,17 @@
+name: Deployment QA
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  call_get_last_commit_in_pr:
+    uses: ./.github/workflows/wf_call_get_last_commit_in_pt.yml
+
+  call_unity_testing:
+    needs: call_get_last_commit_in_pr
+    if: ${{ !contains(needs.call_get_last_commit_in_pr.outputs.lastcommit, '[skip testing]') }}
+    uses: ./.github/workflows/wf_call_unity_testing.yml
+
+
