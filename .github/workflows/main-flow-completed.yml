@@ -36,13 +36,13 @@ jobs:
       WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
 
   debug:
-   name: JOB failure
-   needs: [call_get_last_commit_in_pr, call_unity_testing, call_deployment, call_slack_notification]
-   runs-on: ubuntu-latest
-   if: ${{ failure() }}
-   uses: ./.github/workflows/wf_call_slack_notification.yml
+    name: JOB failure
+    needs: [call_get_last_commit_in_pr, call_unity_testing, call_deployment, call_slack_notification]
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+    uses: ./.github/workflows/wf_call_slack_notification.yml
     with:
       title: "Main flow completed :: failure"
       message: "${{ job.steps.bad.status }}"
-    secrets:
-      WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
+      secrets:
+        WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
