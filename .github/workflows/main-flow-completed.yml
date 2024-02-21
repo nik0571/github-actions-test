@@ -25,9 +25,13 @@ jobs:
       SERVER_USER_QA: ${{ secrets.SERVER_USER_QA }}
       SERVER_SSH_KEY_QA: ${{ secrets.SERVER_SSH_KEY_QA }}
       SERVER_SSH_PORT_QA: ${{ secrets.SERVER_SSH_PORT_QA }}
-    # with:
-    #   input_SERVER_HOST_QA: "${{ secrets.SERVER_SSH_PORT_QA }}"
-    #   SERVER_USER_QA: ${{ secrets.SERVER_USER_QA }}
-    #   SERVER_SSH_KEY_QA: ${{ secrets.SERVER_SSH_KEY_QA }}
-    #   SERVER_SSH_PORT_QA: ${{ secrets.SERVER_SSH_PORT_QA }}
-    #   SERVER_SSH_PORT_QA: ${{ secrets.SERVER_SSH_PORT_QA }}
+
+  call_slack_notification:
+    needs: call_deployment
+    uses: ./.github/workflows/wf_call_slack_notification.yml
+    with:
+      title: "Deploy to QA"
+      message: "rollback folder: ${{needs.call_deployment.outputs.toRollback}}"
+    secrets:
+      WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
+
