@@ -42,7 +42,7 @@ jobs:
     uses: ./.github/workflows/wf_call_slack_notification.yml
     with:
       title: "Main flow completed :: failure"
-      message: "ERROR: ${{ toJSON(needs.call_deployment.result) }}"
+      message: "ERROR: needs.call_deployment.result :::: ${{ toJSON(needs.call_deployment) }}"
       username: "JobsError"
       icon: "https://img.icons8.com/arcade/100/close-window.png"
       color: 'failure'
