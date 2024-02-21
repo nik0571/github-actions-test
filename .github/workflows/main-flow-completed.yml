@@ -27,13 +27,12 @@ jobs:
       SERVER_SSH_PORT_QA: ${{ secrets.SERVER_SSH_PORT_QA }}
 
   call_slack_notification:
-    id: call_slack_notification_id
     needs: call_deployment
     uses: ./.github/workflows/wf_call_slack_notification.yml
     with:
       title: "Deploy to QA"
       message: "rollback folder: ${{needs.call_deployment.outputs.toRollback}}"
-      color: ${{ jobs.call_slack_notification_id.result }}
+      color: ${{ needs.jobs.call_slack_notification.status }}
     secrets:
       WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
 
