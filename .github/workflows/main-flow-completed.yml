@@ -42,5 +42,5 @@ jobs:
     with:
       title: "Main flow completed :: failure"
       message: "ERROR "
-      secrets:
-        WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
+    secrets:
+      WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
