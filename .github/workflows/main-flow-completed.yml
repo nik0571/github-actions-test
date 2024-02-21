@@ -27,7 +27,7 @@ jobs:
       SERVER_SSH_PORT_QA: ${{ secrets.SERVER_SSH_PORT_QA }}
 
   call_slack_notification:
-    needs: call_deployment
+    needs: [call_get_last_commit_in_pr, call_unity_testing, call_deployment]
     uses: ./.github/workflows/wf_call_slack_notification.yml
     with:
       title: "Deploy to QA"
