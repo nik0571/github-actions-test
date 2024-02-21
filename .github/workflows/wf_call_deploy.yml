@@ -2,6 +2,15 @@ name: deploy
 
 on:
   workflow_call:
+    inputs:
+      PATH:
+        required: true
+        type: string
+      CURRENT_APP_FOLDER_NAME:
+        description: 'Folder con la app actual'
+        default: 'dist'
+        required: false
+        type: string
     outputs:
       toRollback:
         description: "folder To Rollback"
@@ -48,4 +57,4 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY_QA }}
           port: ${{ secrets.SERVER_SSH_PORT_QA }}
           script: |
-            mv -f /var/www/qa-web/test/name /var/www/qa-web/test/${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}
+            mv -f ${{ inputs.PATH }}/${{ inputs.CURRENT_APP_FOLDER_NAME }} ${{ inputs.PATH }}/${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}
