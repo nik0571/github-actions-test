@@ -32,7 +32,7 @@ jobs:
     with:
       title: "Deploy to QA"
       message: "rollback folder: ${{needs.call_deployment.outputs.toRollback}}"
-      color: ${{ jobs.call_slack_notification.result }}
+      color: ${{ needs.jobs.call_slack_notification.result }}
     secrets:
       WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
 
