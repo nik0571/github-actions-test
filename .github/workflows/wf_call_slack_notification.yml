@@ -1,0 +1,50 @@
+name: slack
+
+on:
+  workflow_call:
+    inputs:
+      title:
+        required: true
+        type: string
+      message:
+        description: 'Meessage'
+        default: ''
+        required: false
+        type: string
+      username:
+        description: 'user name'
+        default: 'rtCamp'
+        required: false
+        type: string
+      icon:
+        description: 'icon url'
+        default: 'https://img.icons8.com/external-yogi-aprelliyanto-flat-yogi-aprelliyanto/100/000000/external-startup-marketing-and-seo-yogi-aprelliyanto-flat-yogi-aprelliyanto.png'
+        required: false
+        type: string
+      color:
+        description: 'icon url'
+        default: 'success'
+        required: false
+        type: string
+    secrets:
+      WEBHOOK_URL:
+        required: true
+
+jobs:
+
+  send-to-slack:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: send
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.WEBHOOK_URL }}
+          SLACK_COLOR: ${{ inputs.color }}
+          SLACK_USERNAME: ${{ inputs.username }}
+          SLACK_TITLE: ${{ inputs.title }}
+          SLACK_MESSAGE: ${{ inputs.message }}
+          SLACK_ICON: ${{ inputs. icon}}
+
+
