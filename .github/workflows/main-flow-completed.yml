@@ -41,6 +41,6 @@ jobs:
     uses: ./.github/workflows/wf_call_slack_notification.yml
     with:
       title: "Main flow completed :: failure"
-      message: "${{ job.steps.bad.status }}"
+      message: "ERROR "
       secrets:
         WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
