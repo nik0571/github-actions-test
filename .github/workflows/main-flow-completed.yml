@@ -43,6 +43,5 @@ jobs:
       title: "Main flow completed :: failure"
       message: "ERROR: job.steps.bad.status "
       icon: https://img.icons8.com/arcade/100/close-window.png
-      color: "failure"
     secrets:
       WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
