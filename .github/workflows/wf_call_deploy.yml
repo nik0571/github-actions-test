@@ -37,6 +37,7 @@ jobs:
       - name: gemerate name folder
         id: generate_rollback_folder_name
         run: echo "rollbackName=rollback_$(date +%Y_%m_%d_%H_%M_%S)" >> "$GITHUB_OUTPUT"
+      - name: echo result
         run: echo ${{ inputs.PATH }}/${{ inputs.CURRENT_APP_FOLDER_NAME }} ${{ inputs.PATH }}/${{ needs.job_generate_rollback_folder_name.outputs.FOLDER_NAME }}
 
 
