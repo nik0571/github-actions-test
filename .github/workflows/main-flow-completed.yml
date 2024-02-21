@@ -19,7 +19,7 @@ jobs:
     if: ${{ !contains(needs.call_get_last_commit_in_pr.outputs.lastcommit, '[skip deployment]') }}
     uses: ./.github/workflows/wf_call_deploy.yml
     with:
-      PATH: /var/www/qa-web/test/
+      PATH: "/var/www/qa-web/test"
     secrets:
       SERVER_HOST_QA: "${{ secrets.SERVER_HOST_QA }}"
       SERVER_USER_QA: ${{ secrets.SERVER_USER_QA }}
