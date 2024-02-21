@@ -42,5 +42,6 @@ jobs:
     with:
       title: "Main flow completed :: failure"
       message: "ERROR: ${{ toJson(job.steps.bad) }}"
+      icon: https://img.icons8.com/arcade/100/close-window.png
     secrets:
       WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_QA }}
