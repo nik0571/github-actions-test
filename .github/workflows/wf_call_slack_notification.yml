@@ -21,6 +21,11 @@ on:
         default: 'https://img.icons8.com/external-yogi-aprelliyanto-flat-yogi-aprelliyanto/100/000000/external-startup-marketing-and-seo-yogi-aprelliyanto-flat-yogi-aprelliyanto.png'
         required: false
         type: string
+      color:
+        description: 'icon url'
+        default: 'success'
+        required: false
+        type: string
     secrets:
       WEBHOOK_URL:
         required: true
@@ -35,8 +40,8 @@ jobs:
       - name: send
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_COLOR: ${{ job.status }}
           SLACK_WEBHOOK: ${{ secrets.WEBHOOK_URL }}
+          SLACK_COLOR: ${{ inputs.color }}
           SLACK_USERNAME: ${{ inputs.username }}
           SLACK_TITLE: ${{ inputs.title }}
           SLACK_MESSAGE: ${{ inputs.message }}
