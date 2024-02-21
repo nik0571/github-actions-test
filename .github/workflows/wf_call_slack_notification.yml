@@ -21,11 +21,6 @@ on:
         default: 'https://img.icons8.com/external-yogi-aprelliyanto-flat-yogi-aprelliyanto/100/000000/external-startup-marketing-and-seo-yogi-aprelliyanto-flat-yogi-aprelliyanto.png'
         required: false
         type: string
-      color:
-        description: 'color meesage'
-        default: ${{ job.status }}
-        required: false
-        type: string
     secrets:
       WEBHOOK_URL:
         required: true
@@ -43,7 +38,7 @@ jobs:
           SLACK_COLOR: ${{ job.status }}
           SLACK_WEBHOOK: ${{ secrets.WEBHOOK_URL }}
           SLACK_USERNAME: ${{ inputs.username }}
-          SLACK_TITLE: "${{ job.status }} :: ${{ inputs.title }}"
+          SLACK_TITLE: ${{ inputs.title }}
           SLACK_MESSAGE: ${{ inputs.message }}
           SLACK_ICON: https://img.icons8.com/external-yogi-aprelliyanto-flat-yogi-aprelliyanto/100/000000/external-startup-marketing-and-seo-yogi-aprelliyanto-flat-yogi-aprelliyanto.png
 
